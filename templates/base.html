@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+
+        /* Styling for the selected (checked) state */
+        input[type="radio"]:checked + label.option-button, input[type="radio"]:checked + label.adjustment-label {
+            border-color: #007bff; /* Subtle border change to indicate selection */
+        }
+        /* Gear button styling */
+        .gear-button {
+            position: fixed; /* Stick it to the top-right corner */
+            top: 90px;
+            right: 10px;
+            background-color: #f8f9fa; /* Light background */
+            border: none;
+            border-radius: 50%; /* Make it circular */
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .gear-button i {
+            color: #333; /* Icon color */
+            font-size:14px;
+        }
+
+        .gear-button:hover {
+            background-color: #e0e0e0; /* Change background on hover */
+        }
+
+        .gear-button:active {
+            transform: scale(0.95); /* Slight shrink on click */
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-sql.min.js"></script>
+</head>
+<body>
+    <header><script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let apiKey = localStorage.getItem("api_key");
+        let userId = localStorage.getItem("user_id"); // Get the user ID from localStorage
+
+        // If both API Key and User ID exist, update UI
+        if (apiKey && userId) {
+            console.log("API Key found:", apiKey);
+            console.log("User ID found:", userId);
+
+            document.getElementById("editableAPIkey").value = apiKey;
+            document.getElementById("editableUserId").value = userId;
+            document.getElementById("api_key_display").innerText = "API Key: " ;//+ apiKey;
+            document.getElementById("user_id_display").innerText = "User ID: " ;//+ userId; // Display user ID
+
+            // Send API Key and User ID to Flask (only once)
+            fetch("/save_api_key_and_user_id", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ api_key: apiKey, user_id: userId }),
+            })
+            .then(response => response.json())
+            .then(data => console.log("Server Response:", data))
+            .catch(error => console.error("Error sending data:", error));
+        } else {
+            console.log("⚠️ API Key or User ID is missing. Showing popup.");
+            showPopup();  // Show the popup if either API key or User ID is missing
+        }
+    });
+
+    // Show the popup
+    function showPopup() {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("popup").style.display = "block";
+    }
+
+    // Hide the popup
+    function hidePopup() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("popup").style.display = "none";
+    }
+
+    // Save API Key and User ID from the popup
+    function saveChanges() {
+        const apiKey = document.getElementById("editableAPIkey").value;
+        const userId = document.getElementById("editableUserId").value; // Assume you have a field for user ID
+
+        if (apiKey.trim() === "" || userId.trim() === "") {
+            alert("API Key and User ID cannot be empty!");
+            return;
+        }
+
+        localStorage.setItem("api_key", apiKey);
+        localStorage.setItem("user_id", userId);
+
+        // Send API Key and User ID to Flask
+        fetch("/save_api_key_and_user_id", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ api_key: apiKey, user_id: userId }),
+            })
+            .then(response => {
+                // Try to parse JSON safely
+                return response.json().catch(() => ({}));
+            })
+            .then(data => {
+                if (data.message) alert(data.message);
+                hidePopup();  // Always hide popup after attempt
+            })
+            .catch(error => {
+                console.error("Error sending data:", error);
+                hidePopup();  // Still hide popup if something fails
+            });
+    }
+</script>
+
+<!--<p id="api_key_display">API Key not set.</p>
+<p id="user_id_display">USER ID not set.</p>-->
+
+
+            <!--
+                document.addEventListener("DOMContentLoaded", function() {
+                    // Get all step links
+                    const steps = document.querySelectorAll(".nav-container .step");
+
+                    // Load last active step from localStorage (or default to step 1)
+                    let activeStep = parseInt(localStorage.getItem("activeStep")) || 1;
+                    highlightSteps(activeStep);
+
+                    // Click event listener for step links
+                    steps.forEach(step => {
+                        step.addEventListener("click", function(event) {
+                            event.preventDefault(); // Prevent immediate page reload
+
+                            let stepNumber = parseInt(this.getAttribute("data-step"));
+                            highlightSteps(stepNumber);
+                            localStorage.setItem("activeStep", stepNumber); // Store progress
+
+                            // Allow navigation after highlighting
+                            setTimeout(() => {
+                                window.location.href = this.href;
+                            }, 200); // Delay ensures visual update before navigation
+                        });
+                    });
+
+                    function highlightSteps(activeStep) {
+                        steps.forEach(step => {
+                            let stepNumber = parseInt(step.getAttribute("data-step"));
+                            if (stepNumber <= activeStep) {
+                                step.classList.add("active"); // Highlight previous and current steps
+                            } else {
+                                step.classList.remove("active"); // Remove highlight for future steps
+                            }
+                        });
+                    }
+                });
+            </script>-->
+        <h1 style="text-align: center">BenchPress</h1>
+         {% block header %}
+        <nav class="nav-container">
+            <a href="{{ url_for('index') }}" class="pre step" data-step="1">Home</a>
+            <a href="{{ url_for('upload') }}" class="pre step" data-step="2">Upload</a>
+            <a href="{{ url_for('task_selection') }}" class="pre step" data-step="3">Tasks</a>
+            <a href="{{ url_for('retrieval', annotation_id=1) }}" class="run step" data-step="4">Retrieval</a>
+            <!--<a href="{{ url_for('correction') }}" class="step" data-step="5">Correction</a>-->
+            <a href="{{ url_for('sql_annotation', annotation_id=1) }}?type=sql" class="run step" data-step="5">Generation</a>
+            <a href="{{ url_for('feedback', annotation_id=annotation_id) }}" class="run step" data-step="6">Feedback</a>
+            <a href="{{ url_for('review') }}" class="step" data-step="7">Review</a>
+            <!--<a href="{{ url_for('sql_annotation', annotation_id=1) }}?type=sql" class="step" data-step="8">SQL</a>-->
+            <!--<a href="{{ url_for('coming_soon') }}?type=column" class="step" data-step="9">Column Annotation</a>-->
+            <!--<a href="{{ url_for('coming_soon') }}" class="step" data-step="10">SQL Creation</a>-->
+            <!--<a href="{{ url_for('coming_soon') }}" class="step" data-step="11">NL Creation</a>-->
+            <!--<a href="{{ url_for('verification', annotation_id=1) }}?type=verification" class="step" data-step="12">Verification</a>-->
+        </nav>
+        {% endblock %}
+        <!-- Gear Button -->
+        <button class="gear-button" onclick="showPopup()">
+            <i class="fas fa-cog"></i> <!-- Gear icon -->
+        </button>
+
+            <!-- Overlay & Popup (Always in HTML but Hidden by Default) -->
+            <div id="overlay" class="overlay" style="display:none;"></div>
+
+            <div id="popup" class="popup" style="display:none;">
+                <!--  <button class="close" onclick="hidePopup()">&times;</button> -->
+                <h2 style="text-align: center;color:black">Current API KEY</h2>
+                <textarea id="editableAPIkey">{{ api_key }}</textarea>
+                <h2 style="text-align: center;color:black">Current USER ID</h2>
+                <textarea id="editableUserId">{{ user_id }}</textarea>
+                <button onclick="saveChanges()">Save</button>
+            </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
