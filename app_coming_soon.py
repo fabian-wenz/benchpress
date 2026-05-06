@@ -263,7 +263,7 @@ def save_and_next():
             schema_file = request.files.get("schema_file")
             database_file = request.files.get("database_file")
             sql_file = request.files.get("sql_file")
-            print("final")
+            upload(schema_file, database_file, sql_file)
         logdata = load_json_data(SQL_FILE.format(DATABASE=DATABASE.lower()))
         data_length = len(logdata)
         REL_TABLES = ['']*data_length

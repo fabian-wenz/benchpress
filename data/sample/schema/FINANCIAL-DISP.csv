@@ -1,0 +1,5 @@
+COLUMN_NAME,DATA_TYPE,PKEY,FKEY
+disp_id,integer,PRIMARY KEY,
+client_id,integer,,FOREIGN KEY FINANCIAL-CLIENT (client_id)
+account_id,integer,,FOREIGN KEY FINANCIAL-ACCOUNT (account_id)
+type,text,,

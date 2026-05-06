@@ -1,0 +1,11 @@
+COLUMN_NAME,DATA_TYPE,PKEY,FKEY
+trans_id,integer,PRIMARY KEY,
+account_id,integer,,FOREIGN KEY FINANCIAL-ACCOUNT (account_id)
+date,date,,
+type,text,,
+operation,text,,
+amount,integer,,
+balance,integer,,
+k_symbol,text,,
+bank,text,,
+account,integer,,

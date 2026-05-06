@@ -1,0 +1,7 @@
+COLUMN_NAME,DATA_TYPE,PKEY,FKEY
+order_id,integer,PRIMARY KEY,
+account_id,integer,,FOREIGN KEY FINANCIAL-ACCOUNT (account_id)
+bank_to,text,,
+account_to,integer,,
+amount,real,,
+k_symbol,text,,

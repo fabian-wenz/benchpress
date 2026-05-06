@@ -1,1 +1,17 @@
-Flask==3.0.3
+flask
+pandas
+sqlparse
+numpy
+sql-metadata
+sentence-transformers
+sqlglot
+openai
+nltk
+rouge
+bert-score
+python-dotenv
+transformers
+torch
+
+# After installing requirements, run:
+# python -m nltk.downloader punkt

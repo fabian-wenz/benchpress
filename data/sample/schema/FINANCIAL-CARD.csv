@@ -1,0 +1,5 @@
+COLUMN_NAME,DATA_TYPE,PKEY,FKEY
+card_id,integer,PRIMARY KEY,
+disp_id,integer,,FOREIGN KEY FINANCIAL-DISP (disp_id)
+type,text,,
+issued,date,,

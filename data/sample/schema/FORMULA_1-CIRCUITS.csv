@@ -1,0 +1,10 @@
+COLUMN_NAME,DATA_TYPE,PKEY,FKEY
+circuitId,integer,PRIMARY KEY,
+circuitRef,text,,
+name,text,,
+location,text,,
+country,text,,
+lat,real,,
+lng,real,,
+alt,integer,,
+url,text,,
