@@ -40,8 +40,7 @@ This system was developed as part of the BENCHPRESS project and supports benchma
 ## 🔧 Installation
 
 ```bash
-git clone https://github.com/fabian-wenz/enterprise-txt2sql.git
-cd enterprise-txt2sql
+git clone https://github.com/fabian-wenz/benchpress.git
 pip install -r requirements.txt
 ```
 
@@ -55,7 +54,7 @@ Requirements:
 ## 🚀 Quickstart
 
 ```bash
-python website/app.py
+python app.py
 ```
 
 
@@ -86,14 +85,29 @@ Then open your browser and go to:
 
 ```text
 .
-├── demo/                # Screenshots and videos for README
-├── website/             # Preprocessing, clustering, and evaluation scripts
-  ├── data/                # Sample SQL logs and generated benchmark data
-  ├── templates/           # HTML templates for visualizinf the website
-  ├── app.py               # Main entry point for the UI
-  ├── config.py            # Prompts and LLM interaction
-├── requirements.txt     # Python dependencies
-└── README.md            # This file
+├── app.py                     # Main application entry point
+├── config.py                  # Prompt configuration and LLM setup
+├── requirements.txt           # Python dependencies
+├── README.md                  # Project documentation
+
+├── demo/                      # Screenshots, videos, posters
+│   ├── preview.png
+│   ├── workflow.jpeg
+│   └── BENCHPRESS-NEDB-poster.pdf
+
+├── templates/                 # HTML templates for the web UI
+
+├── data/
+│   ├── sample/                # Example benchmark data
+│   │   ├── database/          # SQLite database samples
+│   │   ├── schema/            # SQL schema files
+│   │   ├── queries.json       # Example SQL logs
+│   │   └── tables.json        # Embedded schema metadata
+│   │
+│   ├── user/                  # User annotations and exports
+│   │   └── queries_[user].json
+│   │
+│   └── ...                    # Additional uploaded workloads
 ```
 
 ---
@@ -103,7 +117,7 @@ Then open your browser and go to:
 ```json
 {
   "question": "Show the top 10 customers by revenue.",
-  "query": "SELECT customer_name FROM sales ORDER BY revenue DESC LIMIT 10"
+  "sql": "SELECT customer_name FROM sales ORDER BY revenue DESC LIMIT 10"
 }
 ```
 

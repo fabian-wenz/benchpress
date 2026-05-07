@@ -1,0 +1,9 @@
+COLUMN_NAME,DATA_TYPE,PKEY,FKEY
+id,integer,PRIMARY KEY,
+flavorText,text,,
+language,text,,
+multiverseid,integer,,
+name,text,,
+text,text,,
+type,text,,
+uuid,text,,FOREIGN KEY CARD_GAMES-CARDS (uuid)

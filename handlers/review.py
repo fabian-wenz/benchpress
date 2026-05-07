@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 from flask import render_template
 from openai import OpenAI
+from flask import render_template, request, send_file
 
 from metrics import evaluate_nl_accuracy
 
@@ -246,6 +247,15 @@ def _review():
     if not sql_file.exists():
         raise FileNotFoundError(f"User query file not found: {sql_file}")
 
+    if request.args.get("download") == "1":
+        file_path = DATA_DIR / "user" / f"queries_{runtime['user_id']}.json"
+
+        return send_file(
+            file_path,
+            as_attachment=True,
+            download_name=f"queries_{runtime['user_id']}.json",
+            mimetype="application/json"
+        )
     logdata = pd.read_json(sql_file)
     logdata = logdata[logdata["question"] != ""].copy()
 
@@ -305,6 +315,5 @@ def _review():
         "bert": round(np.mean(results["BERTScore"]) * 100, 2),
         "back_translation": round(np.mean(results["BACK_TRANSLATION"]) * 100, 2)
     }
-
     print(result)
     return render_template("review.html", annotation=result)
