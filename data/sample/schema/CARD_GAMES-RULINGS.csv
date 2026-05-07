@@ -1,0 +1,5 @@
+COLUMN_NAME,DATA_TYPE,PKEY,FKEY
+id,integer,PRIMARY KEY,
+date,date,,
+text,text,,
+uuid,text,,FOREIGN KEY CARD_GAMES-CARDS (uuid)

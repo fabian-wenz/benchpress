@@ -1,0 +1,5 @@
+COLUMN_NAME,DATA_TYPE,PKEY,FKEY
+id,integer,PRIMARY KEY,
+language,text,,
+setCode,text,,FOREIGN KEY CARD_GAMES-SETS (code)
+translation,text,,
