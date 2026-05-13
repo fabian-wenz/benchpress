@@ -1,8 +1,8 @@
 [
     {
-        "adjusted": "",
+        "adjusted": false,
         "column_names": [
-            "name"
+            "ERROR"
         ],
         "comment": "",
         "db_id": "card_games",
@@ -12,13 +12,13 @@
         "gold-sql": "SELECT name FROM sets WHERE mtgoCode IS NULL ORDER BY name LIMIT 3",
         "gold_sql": "SELECT name\nFROM\nSETS\nWHERE mtgoCode IS NULL\nORDER BY name\nLIMIT 3",
         "options": [
-            "Could you provide a list of the first three sets from the collection that do not have an associated MTGO code? The output should include the names of these sets, arranged in alphabetical order.",
-            "What are the names of the top three sets that currently lack an MTGO code? The results will be sorted alphabetically to present the information clearly.",
-            "Can you tell me the names of up to three sets that do not have an MTGO code? The list should be ordered from A to Z so that it's easy to read and understand.",
-            "Please show me the names of the first three sets that have no MTGO code assigned to them. These names will be presented in alphabetical order for better visibility."
+            "Can you provide a list of the first three names from the 'sets' table where the 'mtgoCode' is not assigned, sorted alphabetically?",
+            "What are the names of the first three entries in the 'sets' table that do not have a corresponding 'mtgoCode,' presented in ascending order?",
+            "Please list three names from the 'sets' table for which 'mtgoCode' is absent, arranging them in alphabetical order.",
+            "What are the names of the top three sets that lack an 'mtgoCode,' and could you present these names in order from A to Z?"
         ],
         "percentage": 0.0,
-        "question": "",
+        "question": "Can you provide a list of the first three names from the 'sets' table where the 'mtgoCode' is not assigned, sorted alphabetically?",
         "question_embedding": [
             -0.0102658039,
             -0.0437358618,
@@ -408,13 +408,7 @@
         "question_id": 426,
         "rows": [
             [
-                "15th Anniversary Cards"
-            ],
-            [
-                "2016 Heroes of the Realm"
-            ],
-            [
-                "2017 Gift Pack"
+                "no such table: sets"
             ]
         ],
         "sql": "",
@@ -805,10 +799,10 @@
             -0.015717268
         ],
         "time": {
-            "annotation": 0,
+            "annotation": 9.393298864364624,
             "decomposition": 0,
             "feedback": 0,
-            "retrieval": 1.9539718627929688
+            "retrieval": 2.390535593032837
         }
     },
     {

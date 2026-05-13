@@ -208,3 +208,7 @@ __marimo__/
 .*
 *.sqlite
 config.json
+
+# Markdown files (except README)
+*.md
+!README.md
