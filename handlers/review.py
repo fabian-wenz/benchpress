@@ -7,7 +7,8 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 from flask import render_template
-from openai import OpenAI
+from openai import AzureOpenAI
+import handlers.state as state
 from flask import render_template, request, send_file
 
 from metrics import evaluate_nl_accuracy
@@ -109,7 +110,7 @@ Rules:
 
 
 def call_llm_for_sql(prompt, api_key, model="gpt-4.1-mini"):
-    client = OpenAI(api_key=api_key)
+    client = AzureOpenAI(api_key=api_key, azure_endpoint=state.AZURE_ENDPOINT, api_version=state.API_VERSION)
 
     response = client.chat.completions.create(
         model=model,

@@ -1,5 +1,7 @@
 {
     "api_key": "",
+    "azure_endpoint": "https://oai-itai-prod-bngu.openai.azure.com/",
+    "api_version": "2024-12-01-preview",
     "database": "SAMPLE",
     "datasets": [
         "SAMPLE"
@@ -26,5 +28,5 @@
     "tasks": [
         "SQL-2-TXT"
     ],
-    "user_id": ""
+    "user_id": "new_user"
 }

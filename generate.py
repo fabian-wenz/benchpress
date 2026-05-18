@@ -1,5 +1,6 @@
-from openai import OpenAI
+from openai import AzureOpenAI
 import os
+import handlers.state as state
 import pandas as pd
 import re
 from sql_metadata import Parser
@@ -86,9 +87,9 @@ def create_tablestatements(tables, tables_folder, db_id):
     return prompt
 
 
-def generate_candidates(api_key, sql_file):
+def generate_candidates(api_key, sql_file, model="gpt-4o-mini"):
     # Initialize OpenAI API with your key
-    client = OpenAI(api_key=api_key)
+    client = AzureOpenAI(api_key=api_key, azure_endpoint=state.AZURE_ENDPOINT, api_version=state.API_VERSION)
 
     # Read the SQL queries from JSON file into a dataframe
     df = pd.read_json(sql_file)#("sql48clean.json")
@@ -102,7 +103,7 @@ def generate_candidates(api_key, sql_file):
 
         # Make the API call to generate natural language questions
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model=model,
             temperature=0,  # Zero temperature ensures correctness and consistency
             messages=[
                 {
@@ -158,7 +159,7 @@ def create_formated_output(rows, headers):
 
 def generate_candidate(model, api_key, prompt,prompt_txt, sql, tables, examples, db_id, db_set, rows, headers):
     # Initialize OpenAI API with your key
-    client = OpenAI(api_key=api_key)
+    client = AzureOpenAI(api_key=api_key, azure_endpoint=state.AZURE_ENDPOINT, api_version=state.API_VERSION)
     # Iterate through each row in the dataframe
 
     example_prompt = create_examples(examples)
@@ -268,7 +269,7 @@ def generate_combined_candidate(model, api_key, sql_in_cte, nl_annotations, exam
     """
     print(prompt)
     # Initialize OpenAI API with your key
-    client = OpenAI(api_key=api_key)
+    client = AzureOpenAI(api_key=api_key, azure_endpoint=state.AZURE_ENDPOINT, api_version=state.API_VERSION)
     # Iterate through each row in the dataframe
 
     # Make the API call to generate natural language questions
@@ -302,7 +303,7 @@ def generate_improved_prompt(model, api_key, prompt_text, options, selected_opti
     remain intact.
     """
     # Initialize OpenAI API
-    client = OpenAI(api_key=api_key)
+    client = AzureOpenAI(api_key=api_key, azure_endpoint=state.AZURE_ENDPOINT, api_version=state.API_VERSION)
     prompt_text = prompt_text
     # Construct the GPT request
     response = client.chat.completions.create(
